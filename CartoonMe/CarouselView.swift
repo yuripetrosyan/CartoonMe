@@ -4,14 +4,14 @@
 //
 //  Created by Yuri Petrosyan on 11/04/2025.
 //
-
+// CarouselView.swift
 import SwiftUI
 
 struct CarouselItem: Identifiable {
     let id = UUID()
     let title: String
     let image: String // Asset name or system image for now
-    let action: () -> Void // Action when tapped
+    let destination: AnyView? // Optional destination for NavigationLink
 }
 
 struct CarouselView: View {
@@ -44,24 +44,46 @@ struct CarouselView: View {
             ScrollView(.horizontal, showsIndicators: false) {
                 HStack(spacing: 15) {
                     ForEach(items) { item in
-                        Button(action: item.action) {
-                            VStack {
-                                Image(item.image) // Use system image or asset
-                                    .resizable()
-                                    .scaledToFill()
-                                    .frame(width: 120, height: 120)
-                                    .clipShape(RoundedRectangle(cornerRadius: 10))
-                                    .overlay(
-                                        RoundedRectangle(cornerRadius: 10)
-                                            .stroke(Color.gray.opacity(0.3), lineWidth: 1)
-                                    )
-                                
-                                Text(item.title)
-                                    .font(.caption)
-                                    .foregroundColor(.white)
-                                    .lineLimit(1)
+                        if let destination = item.destination {
+                            NavigationLink(destination: destination) {
+                                VStack {
+                                    Image(item.image) // Use system image or asset
+                                        .resizable()
+                                        .scaledToFill()
+                                        .frame(width: 120, height: 120)
+                                        .clipShape(RoundedRectangle(cornerRadius: 10))
+                                        .overlay(
+                                            RoundedRectangle(cornerRadius: 10)
+                                                .stroke(Color.gray.opacity(0.3), lineWidth: 1)
+                                        )
+                                    
+                                    Text(item.title)
+                                        .font(.caption)
+                                        .foregroundColor(.white)
+                                        .lineLimit(1)
+                                }
+                                .frame(width: 120)
                             }
-                            .frame(width: 120)
+                        } else {
+                            Button(action: {}) {
+                                VStack {
+                                    Image(item.image)
+                                        .resizable()
+                                        .scaledToFill()
+                                        .frame(width: 120, height: 120)
+                                        .clipShape(RoundedRectangle(cornerRadius: 10))
+                                        .overlay(
+                                            RoundedRectangle(cornerRadius: 10)
+                                                .stroke(Color.gray.opacity(0.3), lineWidth: 1)
+                                        )
+                                    
+                                    Text(item.title)
+                                        .font(.caption)
+                                        .foregroundColor(.white)
+                                        .lineLimit(1)
+                                }
+                                .frame(width: 120)
+                            }
                         }
                     }
                 }
@@ -72,14 +94,16 @@ struct CarouselView: View {
 }
 
 #Preview {
-    CarouselView(
-        title: "Image to Video Clip",
-        items: [
-            CarouselItem(title: "Yearbook", image: "photo", action: {}),
-            CarouselItem(title: "Business Suit", image: "photo", action: {}),
-            CarouselItem(title: "Kitchen", image: "photo", action: {})
-        ],
-        showSeeAll: true
-    )
-    .background(Color.black)
+    NavigationStack {
+        CarouselView(
+            title: "Image to Video Clip",
+            items: [
+                CarouselItem(title: "Yearbook", image: "photo", destination: AnyView(Text("Yearbook"))),
+                CarouselItem(title: "Business Suit", image: "photo", destination: AnyView(Text("Business Suit"))),
+                CarouselItem(title: "Kitchen", image: "photo", destination: AnyView(Text("Kitchen")))
+            ],
+            showSeeAll: true
+        )
+        .background(Color.black)
+    }
 }
