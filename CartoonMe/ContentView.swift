@@ -17,28 +17,30 @@ struct ContentView: View {
     private let imageProcessor = ImageProcessor()
     
     var body: some View {
-        VStack(spacing: 20) {
-            Text("CartoonMe - \(selectedTheme.name)")
-                .font(.largeTitle)
-                .foregroundColor(selectedTheme.color)
+        ZStack {
+            Color.black.edgesIgnoringSafeArea(.all) // Dark background
             
-            // Original Image Preview
-            if let selectedImage = selectedImage {
-                Image(uiImage: selectedImage)
-                    .resizable()
-                    .scaledToFit()
-                    .frame(maxHeight: 300)
-                    .cornerRadius(10)
-            } else {
-                Rectangle()
-                    .fill(Color.gray.opacity(0.2))
-                    .frame(height: 300)
-                    .cornerRadius(10)
-                    .overlay(Text("Pick a photo!"))
-            }
-            
-            // Buttons
-            HStack{
+            VStack(spacing: 20) {
+                Text("CartoonMe - \(selectedTheme.name)")
+                    .font(.largeTitle)
+                    .foregroundColor(.white) // White text for dark theme
+                
+                // Original Image Preview
+                if let selectedImage = selectedImage {
+                    Image(uiImage: selectedImage)
+                        .resizable()
+                        .scaledToFit()
+                        .frame(maxHeight: 300)
+                        .cornerRadius(10)
+                } else {
+                    Rectangle()
+                        .fill(Color.gray.opacity(0.2))
+                        .frame(height: 300)
+                        .cornerRadius(10)
+                        .overlay(Text("Pick a photo!").foregroundColor(.white))
+                }
+                
+                // Buttons
                 Button("Choose Photo") {
                     showingImagePicker = true
                 }
@@ -52,19 +54,19 @@ struct ContentView: View {
                 .tint(.green)
                 .disabled(selectedImage == nil)
                 
+                // Processed Image Preview
+                if let processedImage = processedImage {
+                    Image(uiImage: processedImage)
+                        .resizable()
+                        .scaledToFit()
+                        .frame(maxHeight: 300)
+                        .cornerRadius(10)
+                }
             }
-            // Processed Image Preview
-            if let processedImage = processedImage {
-                Image(uiImage: processedImage)
-                    .resizable()
-                    .scaledToFit()
-                    .frame(maxHeight: 300)
-                    .cornerRadius(10)
+            .padding()
+            .sheet(isPresented: $showingImagePicker) {
+                ImagePicker(image: $selectedImage)
             }
-        }
-        .padding()
-        .sheet(isPresented: $showingImagePicker) {
-            ImagePicker(image: $selectedImage)
         }
     }
     
