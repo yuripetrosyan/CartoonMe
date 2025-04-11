@@ -27,7 +27,7 @@ struct BannerView: View {
                         Image(item.image)
                             .resizable()
                             .scaledToFill()
-                            .frame(height: 200)
+                            .frame(height: 230)
                             .clipShape(RoundedRectangle(cornerRadius: 15))
                             .overlay(
                                 RoundedRectangle(cornerRadius: 15)
@@ -71,7 +71,21 @@ struct BannerView: View {
                             .padding(.horizontal)
                             .padding(.bottom, 10)
                             
-                        }.frame(height: 200)
+                            .background(
+                                VStack {
+                                    Spacer()
+                                        Rectangle()
+                                            .fill(.ultraThinMaterial)
+
+                                                  .frame(height: 130)
+                                                  .mask {
+
+                                                      LinearGradient(colors: [Color.black, Color.black, Color.black, Color.black.opacity(0)], startPoint: .bottom, endPoint: .top)
+}
+                                          }
+                            )
+                        }.frame(height: 232)
+                            .clipShape(RoundedRectangle(cornerRadius: 15))
                         // NEW Badge
                         if item.isNew {
                             Text("NEW")

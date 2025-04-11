@@ -1,6 +1,10 @@
 {
   "images" : [
     {
+      "filename" : "HouseImage.png",
+      "idiom" : "universal"
+    },
+    {
       "filename" : "Screenshot 2025-04-11 at 11.29.05.png",
       "idiom" : "universal",
       "scale" : "1x"
