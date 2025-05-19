@@ -25,6 +25,7 @@ struct ContentView: View {
     var body: some View {
         ZStack {
             Color.black.ignoresSafeArea()
+            ScrollView{
             VStack(spacing: 28) {
                 // Title
                 HStack(spacing: 12) {
@@ -124,6 +125,7 @@ struct ContentView: View {
                 }
                 Spacer()
             }
+        }
             .sheet(isPresented: $showingImagePicker) {
                 ImagePicker(image: $selectedImage)
             }
