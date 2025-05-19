@@ -66,6 +66,7 @@ struct ThemeSelectionView: View {
                             showSeeAll: true
                         )
                     }.padding(.top, 30)
+                        .padding(.bottom, 100)
                 }
                 
             }
