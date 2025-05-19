@@ -47,8 +47,4 @@ open CartoonMe.xcodeproj
 
 This project is licensed under the MIT License - see the LICENSE file for details.
 
-## Contact
-
-Your Name - [@yourtwitter](https://twitter.com/yourtwitter)
-
-Project Link: [https://github.com/yourusername/CartoonMe](https://github.com/yourusername/CartoonMe) 
+  
