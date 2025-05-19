@@ -62,9 +62,9 @@ struct MainTabBarView: View {
                 }
             }
             .background(.ultraThinMaterial)
-            .clipShape(RoundedRectangle(cornerRadius: 28, style: .continuous))
+            .clipShape(RoundedRectangle(cornerRadius: 30, style: .continuous))
             .padding(.horizontal, 32)
-            .padding(.bottom, 32)
+            //.padding(.bottom, 32)
             .shadow(color: Color.black.opacity(0.2), radius: 12, x: 0, y: 4)
         }
     }
