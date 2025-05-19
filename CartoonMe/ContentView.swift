@@ -5,7 +5,6 @@
 //  Created by Yuri Petrosyan on 10/04/2025.
 //
 
-import Foundation
 // ContentView.swift
 import SwiftUI
 
@@ -14,16 +13,20 @@ struct ContentView: View {
     @State private var selectedImage: UIImage?
     @State private var processedImage: UIImage?
     @State private var showingImagePicker = false
+    @State private var isProcessing = false
     private let imageProcessor = ImageProcessor()
+    
+    @State private var showError = false
+    @State private var errorMessage = ""
     
     var body: some View {
         ZStack {
-            Color.black.edgesIgnoringSafeArea(.all) // Dark background
+            Color.black.edgesIgnoringSafeArea(.all)
             
             VStack(spacing: 20) {
                 Text("CartoonMe - \(selectedTheme.name)")
                     .font(.largeTitle)
-                    .foregroundColor(.white) // White text for dark theme
+                    .foregroundColor(.white)
                 
                 // Original Image Preview
                 if let selectedImage = selectedImage {
@@ -52,7 +55,15 @@ struct ContentView: View {
                 }
                 .buttonStyle(.borderedProminent)
                 .tint(.green)
-                .disabled(selectedImage == nil)
+                .disabled(selectedImage == nil || isProcessing)
+                
+                // Loading Spinner
+                if isProcessing {
+                    ProgressView()
+                        .progressViewStyle(CircularProgressViewStyle())
+                        .tint(.white)
+                        .scaleEffect(1.5)
+                }
                 
                 // Processed Image Preview
                 if let processedImage = processedImage {
@@ -67,16 +78,29 @@ struct ContentView: View {
             .sheet(isPresented: $showingImagePicker) {
                 ImagePicker(image: $selectedImage)
             }
+        }.alert(isPresented: $showError) {
+            Alert(title: Text("Error"), message: Text(errorMessage), dismissButton: .default(Text("OK")))
         }
     }
     
     private func processImage() {
-        if let image = selectedImage {
-            processedImage = imageProcessor.cartoonify(image: image, theme: selectedTheme.name)
+        guard let image = selectedImage else { return }
+        isProcessing = true
+        // In processImage, update the completion:
+        imageProcessor.cartoonify(image: image, theme: selectedTheme.name) { result in
+            DispatchQueue.main.async {
+                if let result = result {
+                    self.processedImage = result
+                } else {
+                    self.errorMessage = "Failed to process the image. Please try again."
+                    self.showError = true
+                }
+                self.isProcessing = false
+            }
         }
     }
+    
 }
-
 #Preview {
-    ContentView(selectedTheme: Theme(name: "Studio Ghibli", color: .purple, image: "ghibli_sample"))
+    ContentView(selectedTheme: Theme(name: "Studio Ghibli", color: .purple, image: "ghibli_sample", logo: ""))
 }

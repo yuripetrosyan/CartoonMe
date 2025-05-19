@@ -9,10 +9,10 @@ import SwiftUI
 
 struct ThemeSelectionView: View {
     let themes = [
-        Theme(name: "Studio Ghibli", color: .purple, image: "GhibliImage"),
-        Theme(name: "Classic Cartoon", color: .blue, image: "cartoon_sample"),
-        Theme(name: "Anime Style", color: .pink, image: "anime_sample"),
-        Theme(name: "Disney", color: .orange, image: "disney_sample")
+        Theme(name: "Studio Ghibli", color: .purple, image: "GhibliImage", logo: ""),
+        Theme(name: "Classic Cartoon", color: .blue, image: "SimpsonsImage",logo: ""),
+        Theme(name: "Anime Style", color: .pink, image: "AnimeImage", logo: ""),
+        Theme(name: "Disney", color: .orange, image: "DisneyImage", logo: "DinseyLogo")
     ]
     
     var body: some View {
@@ -24,7 +24,7 @@ struct ThemeSelectionView: View {
                     VStack(spacing: 20) {
                         // First Carousel: Main Themes
                         CarouselView(
-                            title: "Choose Your Style",
+                            title: "Most Used Styles",
                             items: themes.map { theme in
                                 CarouselItem(
                                     title: theme.name,
@@ -38,7 +38,7 @@ struct ThemeSelectionView: View {
                         // Featured Banner
                         NavigationLink(
                             destination: ContentView(
-                                selectedTheme: Theme(name: "Disney", color: .orange, image: "HouseImage")
+                                selectedTheme: Theme(name: "Disney", color: .orange, image: "HouseImage", logo: "DisneyLogo")
                             )
                         ) {
                             BannerView(
@@ -46,7 +46,8 @@ struct ThemeSelectionView: View {
                                     title: "Disney",
                                     image: "HouseImage",
                                     isNew: true,
-                                    action: {}
+                                    action: {},
+                                    logo: "DisneyLogo"
                                 )
                             )
                         }
@@ -54,7 +55,7 @@ struct ThemeSelectionView: View {
                         
                         // Additional Carousel: More Styles
                         CarouselView(
-                            title: "More Styles",
+                            title: "New Styles",
                             items: themes.reversed().map { theme in
                                 CarouselItem(
                                     title: theme.name,
@@ -64,8 +65,9 @@ struct ThemeSelectionView: View {
                             },
                             showSeeAll: true
                         )
-                    }
+                    }.padding(.top, 30)
                 }
+                
             }
             .navigationTitle("CartoonMe")
             .navigationBarTitleDisplayMode(.inline)
@@ -92,6 +94,7 @@ struct Theme: Identifiable {
     let name: String
     let color: Color
     let image: String
+    let logo: String?
 }
 
 #Preview {

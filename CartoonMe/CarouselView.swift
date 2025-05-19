@@ -14,6 +14,7 @@ struct CarouselItem: Identifiable {
     let destination: AnyView? // Optional destination for NavigationLink
 }
 
+
 struct CarouselView: View {
     let title: String
     let items: [CarouselItem]
@@ -50,7 +51,7 @@ struct CarouselView: View {
                                     Image(item.image) // Use system image or asset
                                         .resizable()
                                         .scaledToFill()
-                                        .frame(width: 120, height: 170)
+                                        .frame(width: 130, height: 190)
                                         .clipShape(RoundedRectangle(cornerRadius: 10))
                                         .overlay(
                                             RoundedRectangle(cornerRadius: 10)
@@ -63,12 +64,12 @@ struct CarouselView: View {
                                         ZStack{
                                             
                                                     Rectangle()
-                                                        .fill(.ultraThinMaterial)
+                                                .fill(.ultraThinMaterial.opacity(0.9))
 
                                                               .frame(height:70)
                                                               .mask {
 
-                                                                  LinearGradient(colors: [Color.black, Color.black, Color.black, Color.black.opacity(0)], startPoint: .bottom, endPoint: .top)
+                                                                  LinearGradient(colors: [Color.gray, Color.red, Color.black, Color.black.opacity(0)], startPoint: .bottom, endPoint: .top)
             }
                                                       
                                         
@@ -78,8 +79,9 @@ struct CarouselView: View {
                                             
                                             Text(item.title)
                                                 .font(.caption)
+                                                .fontDesign(.rounded)
                                                 .foregroundColor(.white)
-                                                .lineLimit(2)
+                                                .lineLimit(1)
                                                 .padding(10)
                                                 .padding(.top)
                                             
@@ -87,9 +89,9 @@ struct CarouselView: View {
                                         
                                     }
                                  
-                                    .frame(width: 120, height: 170)
+                                    .frame(width: 130, height: 190)
                                 }
-                                .frame(width: 120)
+                                .frame(width: 130)
                             }
                         } else {
                             Button(action: {}) {
@@ -97,7 +99,7 @@ struct CarouselView: View {
                                     Image(item.image)
                                         .resizable()
                                         .scaledToFill()
-                                        .frame(width: 120, height: 170)
+                                        .frame(width: 130, height: 170)
                                         .clipShape(RoundedRectangle(cornerRadius: 10))
                                         .overlay(
                                             RoundedRectangle(cornerRadius: 10)
@@ -109,7 +111,7 @@ struct CarouselView: View {
                                         .foregroundColor(.white)
                                         .lineLimit(1)
                                 }
-                                .frame(width: 120)
+                                .frame(width: 130)
                             }
                         }
                     }
@@ -126,8 +128,8 @@ struct CarouselView: View {
             title: "Image to Video Clip",
             items: [
                 CarouselItem(title: "Studio Ghibli", image: "GhibliImage", destination: AnyView(Text("Yearbook"))),
-                CarouselItem(title: "Business Suit", image: "photo", destination: AnyView(Text("Business Suit"))),
-                CarouselItem(title: "Kitchen", image: "photo", destination: AnyView(Text("Kitchen")))
+                CarouselItem(title: "Simposons Suit", image: "SimpsonsImage", destination: AnyView(Text("SimsponsImage"))),
+                CarouselItem(title: "Kitchen", image: "DisneyImage", destination: AnyView(Text("Kitchen")))
             ],
             showSeeAll: true
         )

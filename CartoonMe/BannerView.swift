@@ -13,6 +13,7 @@ struct BannerItem: Identifiable {
     var image: String
     var isNew: Bool
     let action: () -> Void
+    var logo: String?
 }
 
 
@@ -39,13 +40,19 @@ struct BannerView: View {
                             // Overlay Content
                             HStack {
                                 // Title
-                                Text(item.title.uppercased())
-                                    .font(.title2)
-                                    .fontWeight(.bold)
-                                    .foregroundColor(.white)
-                                    .shadow(radius: 2)
-                                    .padding(.vertical, 10)
-                                    .padding(.horizontal, 20)
+//                                Text(item.title.uppercased())
+//                                    .font(.title2)
+//                                    .fontWeight(.bold)
+//                                    .foregroundColor(.white)
+//                                    .shadow(radius: 2)
+//                                    .padding(.vertical, 10)
+//                                    .padding(.horizontal, 20)
+                                
+                                Image(item.logo ?? "")
+                                    .resizable()
+                                    .aspectRatio(contentMode: .fit)
+                                    .frame(width: 90)
+                                   
 //                                    .background(
 //                                        Color.black.opacity(0.5)
 //                                            .clipShape(RoundedRectangle(cornerRadius: 10))
@@ -69,7 +76,7 @@ struct BannerView: View {
                                     )
                             }
                             .padding(.horizontal)
-                            .padding(.bottom, 10)
+                            .offset(y: 10)
                             
                             .background(
                                 VStack {
@@ -105,5 +112,5 @@ struct BannerView: View {
         }
 
 #Preview {
-    BannerView(item: BannerItem(title: "Disney", image: "HouseImage", isNew: true, action: {}))
+    BannerView(item: BannerItem(title: "Disney", image: "HouseImage", isNew: true, action: {}, logo: "DisneyLogo"))
 }
