@@ -5,6 +5,7 @@
 //  Created by Yuri Petrosyan on 11/04/2025.
 //
 // CarouselView.swift
+
 import SwiftUI
 
 struct CarouselItem: Identifiable {
@@ -19,6 +20,7 @@ struct CarouselView: View {
     let title: String
     let items: [CarouselItem]
     let showSeeAll: Bool
+    let seeAllAction: (() -> Void)?
     
     var body: some View {
         VStack(alignment: .leading, spacing: 10) {
@@ -32,7 +34,7 @@ struct CarouselView: View {
                 
                 if showSeeAll {
                     Button(action: {
-                        // Add "See All" action if needed
+                        seeAllAction?()
                     }) {
                         Text("See All")
                             .font(.subheadline)
@@ -131,7 +133,8 @@ struct CarouselView: View {
                 CarouselItem(title: "Simposons Suit", image: "SimpsonsImage", destination: AnyView(Text("SimsponsImage"))),
                 CarouselItem(title: "Kitchen", image: "DisneyImage", destination: AnyView(Text("Kitchen")))
             ],
-            showSeeAll: true
+            showSeeAll: true,
+            seeAllAction: nil
         )
         .background(Color.black)
     }
